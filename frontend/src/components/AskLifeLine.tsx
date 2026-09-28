@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { api, type ChatResponse } from "../services/api";
 import { FadeIn } from "./Motion";
+import { Markdown } from "./Markdown";
 
 const SUGGESTED_QUESTIONS = [
   "What changed since the last hospital visit?",
@@ -68,6 +69,26 @@ function MemoryCard({ memory, onOpenRecord }: MemoryCardProps) {
   );
 }
 
+/**
+ * Splits the real LLM answer into a short prose summary and the structured
+ * remainder (tables / lists / headings), so the UI can show "Summary" first
+ * and "Key findings" below it. Nothing is invented — both parts are the
+ * backend's own text, only the presentation point is chosen here.
+ */
+function splitSummaryAndFindings(answer: string): { summary: string; findings: string } {
+  const lines = answer.replace(/\r\n/g, "\n").split("\n");
+  const isStructuredBlockStart = (line: string) => {
+    const t = line.trim();
+    if (!t) return false;
+    return t.startsWith("|") || t.startsWith("#") || /^([-*+]|\d+[.)])\s/.test(t);
+  };
+  const cut = lines.findIndex(isStructuredBlockStart);
+  if (cut < 0) return { summary: answer.trim(), findings: "" };
+  const summary = lines.slice(0, cut).join("\n").trim();
+  const findings = lines.slice(cut).join("\n").trim();
+  return { summary, findings };
+}
+
 export function AskLifeLine({ patientId, onOpenRecord }: { patientId: string; onOpenRecord: (id: string) => void }) {
   const [question, setQuestion] = useState("");
   const [asked, setAsked] = useState("");
@@ -75,7 +96,7 @@ export function AskLifeLine({ patientId, onOpenRecord }: { patientId: string; on
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [showAllMemories, setShowAllMemories] = useState(false);
-  const [showVerification, setShowVerification] = useState(false);
+  const [showVerification, setShowVerification] = useState(true);
 
   async function ask(q: string) {
     if (!q.trim() || loading || !patientId) return;
@@ -83,7 +104,7 @@ export function AskLifeLine({ patientId, onOpenRecord }: { patientId: string; on
     setError("");
     setAsked(q);
     setShowAllMemories(false);
-    setShowVerification(false);
+    setShowVerification(true);
     try {
       setAnswer(await api.chat(patientId, q));
     } catch (err: any) {
@@ -95,7 +116,15 @@ export function AskLifeLine({ patientId, onOpenRecord }: { patientId: string; on
   }
 
   const memories = showAllMemories ? (answer?.memories_used ?? []) : ((answer?.memories_used ?? [])).slice(0, 3);
-  const hasConflictOrUncertainty = (answer?.conflicts.length ?? 0) > 0 || (answer?.uncertainty.length ?? 0) > 0;
+  const hasEvidence = (answer?.memories_used.length ?? 0) > 0;
+  const hasConflicts = (answer?.conflicts.length ?? 0) > 0;
+  const hasUncertainty = (answer?.uncertainty.length ?? 0) > 0;
+  // Honest zero-evidence state: Hindsight recalled nothing for this question.
+  const noHistoricalRecords = !!answer && !hasEvidence;
+
+  const { summary, findings } = answer
+    ? splitSummaryAndFindings(answer.answer)
+    : { summary: "", findings: "" };
 
   // "Why this matters" — computed from the actual retrieved evidence only.
   const dates = (answer?.memories_used ?? []).map((m) => m.date).filter(Boolean).sort();
@@ -164,17 +193,48 @@ export function AskLifeLine({ patientId, onOpenRecord }: { patientId: string; on
         <FadeIn className="answer-stack">
           <div className="asked-line">“{asked}”</div>
 
+          {/* ------------------------------------------------ answer first */}
           <section className="answer-block">
             <h3 className="answer-heading">LifeLine answer</h3>
-            <p className="answer-text">{answer.answer}</p>
-            {answer.memories_used.length > 0 && (
+
+            {noHistoricalRecords && (
+              <div className="no-records-banner" role="status">
+                <div className="no-records-title">No historical records found</div>
+                <p className="no-records-text">
+                  LifeLine could not find relevant historical records for this question.
+                </p>
+                <p className="no-records-text">
+                  Because no relevant historical records were recalled, LifeLine cannot provide a
+                  historical comparison.
+                </p>
+              </div>
+            )}
+
+            {summary && (
+              <div className="answer-summary">
+                <Markdown>{summary}</Markdown>
+              </div>
+            )}
+
+            {/* Structured findings (tables, lists) from the real answer.
+                With evidence they are historical findings; without evidence
+                they are clearly framed as clinician verification items, never
+                as recalled history. */}
+            {findings && (
+              <div className="answer-findings">
+                <div className="answer-subheading">{hasEvidence ? "Key findings & changes" : "Items to verify"}</div>
+                <Markdown>{findings}</Markdown>
+              </div>
+            )}
+
+            {hasEvidence && (
               <div className="why-matters">
                 <h4 className="answer-heading">Why this matters</h4>
                 <p>
                   LifeLine assembled this from {answer.memories_used.length} historical
                   memories recalled from long-term memory{span ? ` spanning ${span}` : ""}, each
                   linked to its source record {sourceCount > 0 ? `(${sourceCount} record${sourceCount === 1 ? "" : "s"} attached below)` : ""}.
-                  {answer.conflicts.length > 0 && (
+                  {hasConflicts && (
                     <>
                       {" "}
                       {answer.conflicts.length} potential conflict{answer.conflicts.length === 1 ? "" : "s"} surfaced — never
@@ -186,10 +246,14 @@ export function AskLifeLine({ patientId, onOpenRecord }: { patientId: string; on
             )}
           </section>
 
-          {hasConflictOrUncertainty && (
+          {/* --------------------------------------------- items to verify */}
+          {(hasConflicts || hasUncertainty) && (
             <section className="verification-block">
               <button className="verification-head" onClick={() => setShowVerification((v) => !v)} type="button">
-                <span>⚠ Verification needed</span>
+                <span className="verification-title">
+                  ⚠ Verification needed
+                  {hasConflicts && <span className="conflict-badge">Potential conflict — clinician verification required</span>}
+                </span>
                 <span className="verification-count">
                   {answer.conflicts.length} conflict{answer.conflicts.length === 1 ? "" : "s"}
                   {answer.uncertainty.length ? ` · ${answer.uncertainty.length} note${answer.uncertainty.length === 1 ? "" : "s"}` : ""}
@@ -234,22 +298,27 @@ export function AskLifeLine({ patientId, onOpenRecord }: { patientId: string; on
             </section>
           )}
 
+          {/* ------------------------------------------ hindsight evidence */}
           <section className="memory-evidence">
             <button
               className="memory-evidence-head"
               onClick={() => setShowAllMemories((v) => !v)}
               type="button"
-              disabled={answer.memories_used.length === 0}
+              disabled={!hasEvidence}
             >
-              <span>Hindsight memory</span>
+              <span>Why this answer — Hindsight evidence</span>
               <span className="memory-evidence-count">
-                {answer.memories_used.length} relevant memor{answer.memories_used.length === 1 ? "y" : "ies"} used
-                {answer.memories_used.length > 3 ? (showAllMemories ? " · show less" : " · show all") : ""}
+                {hasEvidence
+                  ? `${answer.memories_used.length} relevant memor${answer.memories_used.length === 1 ? "y" : "ies"} used${
+                      answer.memories_used.length > 3 ? (showAllMemories ? " · show less" : " · show all") : ""
+                    }`
+                  : "no historical evidence found"}
               </span>
             </button>
-            {answer.memories_used.length === 0 && (
+            {!hasEvidence && (
               <div className="memory-empty">
-                No historical memories matched this question. The answer says so honestly.
+                No historical evidence was recalled for this question — the answer above is not
+                based on historical records.
               </div>
             )}
             <div className="memory-card-list">
@@ -259,9 +328,10 @@ export function AskLifeLine({ patientId, onOpenRecord }: { patientId: string; on
             </div>
           </section>
 
+          {/* ------------------------------------------------ source records */}
           <section className="source-records">
             <h3 className="answer-heading">Source records</h3>
-            {answer.source_records.length === 0 && <div className="empty-note">No source records linked to this answer.</div>}
+            {answer.source_records.length === 0 && <div className="empty-note">No source records were found.</div>}
             <div className="source-record-list">
               {answer.source_records.map((r) => (
                 <button key={r.record_id} className="source-record" onClick={() => onOpenRecord(r.record_id)} type="button">
