@@ -1,0 +1,216 @@
+{
+  "patient": {
+    "patient_id": "P-001",
+    "name": "Arjun Mehra",
+    "age": 34,
+    "sex": "Male",
+    "blood_type": "O+",
+    "photo_color": "#0f766e",
+    "is_synthetic": true,
+    "baseline_allergies": [],
+    "baseline_conditions": [],
+    "current_medications": ["Amlodipine 2.5 mg daily", "Pantoprazole 20 mg daily"],
+    "current_issue": "Recurrent dizziness and one episode of near-syncope this week",
+    "current_context_note": "Presenting for evaluation after prior encounters documented dizziness after medication changes. Current med list per chart: Amlodipine 2.5 mg daily, Pantoprazole 20 mg daily."
+  },
+  "records": [
+    {
+      "record_id": "REC-1001",
+      "patient_id": "P-001",
+      "date": "2024-02-14",
+      "record_type": "visit",
+      "title": "Primary care visit — dyspepsia",
+      "facility": "Lakeview Family Medicine",
+      "clinician": "Dr. S. Okafor",
+      "summary": "Evaluation of recurrent epigastric discomfort after meals; no alarm features.",
+      "body": "Subjective: 32-year-old male with recurrent epigastric burning after meals, several times weekly for about 3 months. No weight loss, no dysphagia, no GI bleeding. Assessment: suspected uncomplicated dyspepsia. Medications: Started Pantoprazole 20 mg daily. Plan: trial of PPI for 4-6 weeks; return if symptoms persist. Allergies: NKDA (no known drug allergies)."
+    },
+    {
+      "record_id": "REC-1002",
+      "patient_id": "P-001",
+      "date": "2024-05-22",
+      "record_type": "lab",
+      "title": "Routine labs — metabolic panel",
+      "facility": "Lakeview Family Medicine",
+      "clinician": "Dr. S. Okafor",
+      "summary": "Screening labs at annual review; within normal limits except borderline LDL.",
+      "body": "HbA1c: 5.4%. Sodium: 139 mmol/L. Potassium: 4.1 mmol/L. Creatinine: 0.9 mg/dL. LDL: 128 mg/dL. HDL: 48 mg/dL. Plan: lifestyle counseling for LDL; no medication initiated."
+    },
+    {
+      "record_id": "REC-1003",
+      "patient_id": "P-001",
+      "date": "2024-09-03",
+      "record_type": "prescription",
+      "title": "Prescription — antihypertensive initiated",
+      "facility": "Lakeview Family Medicine",
+      "clinician": "Dr. S. Okafor",
+      "summary": "Home readings consistently 148/92; started on antihypertensive therapy.",
+      "body": "Vitals: BP 148/92 mmHg, HR 76. Home log shows several readings above 145/90 over four weeks. Medications: Started Amlodipine 5 mg daily. Counseling: salt reduction, home BP log. Follow-up in 6 weeks to reassess."
+    },
+    {
+      "record_id": "REC-1004",
+      "patient_id": "P-001",
+      "date": "2024-10-21",
+      "record_type": "followup",
+      "title": "Follow-up — blood pressure recheck",
+      "facility": "Lakeview Family Medicine",
+      "clinician": "Dr. S. Okafor",
+      "summary": "BP improved on therapy; mild ankle swelling noted.",
+      "body": "Vitals: BP 132/84 mmHg, HR 72. Patient reports mild ankle swelling by end of day. Tolerating medication otherwise. Medications: Continue Amlodipine 5 mg daily. Plan: monitor swelling; reassure if stable."
+    },
+    {
+      "record_id": "REC-1005",
+      "patient_id": "P-001",
+      "date": "2025-01-11",
+      "record_type": "visit",
+      "title": "Primary care visit — persistent dyspepsia",
+      "facility": "Lakeview Family Medicine",
+      "clinician": "Dr. S. Okafor",
+      "summary": "Dyspeptic symptoms recurring despite intermittent PPI use.",
+      "body": "Subjective: epigastric burning has returned though less severe than 2024. Patient admits taking PPI only when symptomatic. Assessment: chronic dyspepsia, adherence issue. Medications: Continue Pantoprazole 20 mg daily, emphasize daily use. Allergies listed on intake form: NKDA. Vitals: BP 136/86 mmHg."
+    },
+    {
+      "record_id": "REC-1006",
+      "patient_id": "P-001",
+      "date": "2025-03-18",
+      "record_type": "medication_change",
+      "title": "Medication change — antihypertensive switched",
+      "facility": "Lakeview Family Medicine",
+      "clinician": "Dr. S. Okafor",
+      "summary": "Ankle swelling attributed to antihypertensive; switched therapy and documented a new drug allergy report.",
+      "body": "Vitals: BP 134/82 mmHg. Ankle swelling persisted and bothers patient. Medications: Discontinued Amlodipine 5 mg daily; Started Losartan 50 mg daily. Intake note: patient reports a childhood rash with penicillin; recorded as Penicillin allergy (patient-reported, unverified). Plan: recheck BP in 4 weeks."
+    },
+    {
+      "record_id": "REC-1007",
+      "patient_id": "P-001",
+      "date": "2025-04-30",
+      "record_type": "lab",
+      "title": "Labs — renal function after ARB start",
+      "facility": "Lakeview Family Medicine",
+      "clinician": "Dr. S. Okafor",
+      "summary": "Routine safety labs after starting new antihypertensive.",
+      "body": "Creatinine: 1.0 mg/dL. Potassium: 4.4 mmol/L. HbA1c: 5.5%. Comment: values acceptable after ARB initiation; repeat in 6 months."
+    },
+    {
+      "record_id": "REC-1008",
+      "patient_id": "P-001",
+      "date": "2025-06-29",
+      "record_type": "specialist",
+      "title": "Specialist consultation — gastroenterology",
+      "facility": "St. Aubin Gastroenterology Clinic",
+      "clinician": "Dr. M. Ferreira",
+      "summary": "Ongoing dyspepsia despite daily PPI; workup planned.",
+      "body": "History: 8 months of intermittent epigastric burning despite adherence to Pantoprazole 20 mg daily. No alarm features. Assessment: functional dyspepsia suspected; H. pylori testing ordered. Medications: Increased Pantoprazole to 40 mg daily pending workup. Allergy field in clinic intake: Penicillin (patient-reported)."
+    },
+    {
+      "record_id": "REC-1009",
+      "patient_id": "P-001",
+      "date": "2025-07-15",
+      "record_type": "lab",
+      "title": "Lab report — H. pylori stool antigen",
+      "facility": "St. Aubin Gastroenterology Clinic",
+      "clinician": "Dr. M. Ferreira",
+      "summary": "Infection testing result returned; therapy course planned.",
+      "body": "H. pylori stool antigen: POSITIVE. Plan: eradication therapy discussed. Note: because of the documented Penicillin allergy, an amoxicillin-containing regimen was avoided; a clarithromycin-based regimen selected. Medications: Started Clarithromycin 500 mg twice daily for 14 days (part of eradication course)."
+    },
+    {
+      "record_id": "REC-1010",
+      "patient_id": "P-001",
+      "date": "2025-08-02",
+      "record_type": "visit",
+      "title": "Primary care visit — antibiotic course tolerance",
+      "facility": "Lakeview Family Medicine",
+      "clinician": "Dr. S. Okafor",
+      "summary": "Patient halfway through eradication course; tolerating therapy.",
+      "body": "Subjective: mild metallic taste, no rash, no GI bleeding. Medications: Continue Clarithromycin course (day 10 of 14). Continue Pantoprazole 40 mg daily. Vitals: BP 128/80 mmHg on Losartan 50 mg."
+    },
+    {
+      "record_id": "REC-1011",
+      "patient_id": "P-001",
+      "date": "2025-09-13",
+      "record_type": "discharge",
+      "title": "Hospital discharge summary — gastritis admission",
+      "facility": "Mercy General Hospital",
+      "clinician": "Dr. A. Whitfield",
+      "summary": "Two-day admission for severe epigastric pain; endoscopy showed gastritis; discharged on acid suppression.",
+      "body": "Admission: 33-year-old male with severe epigastric pain, nausea. Endoscopy: antral gastritis, no ulcer, no bleeding. Discharge medications: Continue Pantoprazole 40 mg daily; Started Famotidine 20 mg as needed for breakthrough symptoms. NOTE: pharmacy reconciliation at discharge lists Penicillin V among home medications — this contradicts the documented Penicillin allergy and requires verification. Vitals at discharge: BP 126/78 mmHg on Losartan 50 mg daily."
+    },
+    {
+      "record_id": "REC-1012",
+      "patient_id": "P-001",
+      "date": "2025-10-05",
+      "record_type": "lab",
+      "title": "Lab report — post-eradication confirmation",
+      "facility": "St. Aubin Gastroenterology Clinic",
+      "clinician": "Dr. M. Ferreira",
+      "summary": "Confirmatory testing after eradication course.",
+      "body": "H. pylori stool antigen: NEGATIVE. Plan: step Pantoprazole back down from 40 mg to 20 mg daily over the next month. Medications: Decreased Pantoprazole to 20 mg daily (documented 2025-10-05)."
+    },
+    {
+      "record_id": "REC-1013",
+      "patient_id": "P-001",
+      "date": "2025-11-02",
+      "record_type": "emergency",
+      "title": "Emergency visit — dizziness with near-syncope",
+      "facility": "Mercy General Hospital — Emergency Department",
+      "clinician": "Dr. K. Romano",
+      "summary": "Acute dizziness episode three weeks after starting a new antihypertensive dose; workup unremarkable.",
+      "body": "Chief complaint: sudden dizziness while standing, near-syncope, no chest pain, no palpitations. Vitals in ED: BP 104/64 mmHg supine, 88/58 mmHg standing. Context: antihypertensive dose had been Increased Losartan to 100 mg daily two weeks prior (per triage note). ECG: sinus rhythm, no acute changes. Glucose: 96 mg/dL. Disposition: symptoms improved with fluids; discharged with advice to rise slowly. Medications at visit: Losartan 100 mg daily, Pantoprazole 20 mg daily. Allergy band: Penicillin."
+    },
+    {
+      "record_id": "REC-1014",
+      "patient_id": "P-001",
+      "date": "2025-11-20",
+      "record_type": "medication_change",
+      "title": "Medication change — antihypertensive adjusted after ED visit",
+      "facility": "Lakeview Family Medicine",
+      "clinician": "Dr. S. Okafor",
+      "summary": "Dizziness reviewed; antihypertensive reduced and later switched.",
+      "body": "Review of ED visit: orthostatic drop noted after dose increase. Medications: Discontinued Losartan 100 mg daily; Started Amlodipine 2.5 mg daily (low dose, was previously tolerated at 5 mg without severe symptoms). Plan: home BP log, return sooner if dizziness recurs. Allergies confirmed with patient: Penicillin (rash in childhood, patient-reported)."
+    },
+    {
+      "record_id": "REC-1015",
+      "patient_id": "P-001",
+      "date": "2025-12-08",
+      "record_type": "visit",
+      "title": "Primary care visit — symptom review",
+      "facility": "Lakeview Family Medicine",
+      "clinician": "Dr. S. Okafor",
+      "summary": "Brief dizziness episodes persisting intermittently on new regimen.",
+      "body": "Subjective: two brief dizziness episodes in the past week, both when standing quickly. No syncope. Vitals: BP 118/74 mmHg seated, HR 78. Medications: Continue Amlodipine 2.5 mg daily; Continue Pantoprazole 20 mg daily. Plan: symptom diary; hydration advice."
+    },
+    {
+      "record_id": "REC-1016",
+      "patient_id": "P-001",
+      "date": "2026-01-17",
+      "record_type": "followup",
+      "title": "Follow-up — interval review",
+      "facility": "Lakeview Family Medicine",
+      "clinician": "Dr. S. Okafor",
+      "summary": "Symptoms improved; plan for continued monitoring.",
+      "body": "Subjective: dizziness much improved, one mild episode in past month. Vitals: BP 124/78 mmHg. Medications: Continue Amlodipine 2.5 mg daily, Pantoprazole 20 mg daily. Labs ordered for annual review. Note: patient mentioned filling a prescription at a new pharmacy; med list reconciliation deferred."
+    },
+    {
+      "record_id": "REC-1017",
+      "patient_id": "P-001",
+      "date": "2026-02-03",
+      "record_type": "lab",
+      "title": "Annual labs — metabolic panel",
+      "facility": "Lakeview Family Medicine",
+      "clinician": "Dr. S. Okafor",
+      "summary": "Annual screening labs; metabolically stable.",
+      "body": "HbA1c: 5.4%. Sodium: 140 mmol/L. Potassium: 4.2 mmol/L. Creatinine: 0.95 mg/dL. LDL: 122 mg/dL. Comment: stable; continue current plan."
+    },
+    {
+      "record_id": "REC-1018",
+      "patient_id": "P-001",
+      "date": "2026-03-05",
+      "record_type": "emergency",
+      "title": "Emergency visit — recurrent dizziness",
+      "facility": "Mercy General Hospital — Emergency Department",
+      "clinician": "Dr. K. Romano",
+      "summary": "Second ED visit for dizziness with one near-syncopal episode at work.",
+      "body": "Chief complaint: dizziness escalating over several days, one near-syncope at work, no chest pain. Vitals: BP 106/66 mmHg supine, 92/60 mmHg standing. Glucose: 92 mg/dL. ECG: sinus. Context: patient reports refilling prescriptions at a new pharmacy; notes a bottle labeled Amoxicillin 500 mg in his bag from a dental visit last week — flagged because the allergy band lists Penicillin. This was not reconciled with the discharge summary. Disposition: observed 4 hours, improved with fluids, follow-up recommended within one week. Medications at visit: Amlodipine 2.5 mg daily, Pantoprazole 20 mg daily."
+    }
+  ]
+}

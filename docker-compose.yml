@@ -1,0 +1,24 @@
+# Optional: self-hosted Hindsight for LifeLine.
+# Usage:
+#   docker compose up -d hindsight
+#   then set HINDSIGHT_BASE_URL=http://localhost:8888 in backend/.env
+#
+# The backend and frontend can also run natively (see README getting started).
+
+services:
+  hindsight:
+    image: ghcr.io/vectorize-io/hindsight:latest
+    ports:
+      - "8888:8888"   # API
+      - "9999:9999"   # UI
+    environment:
+      # Hindsight needs an LLM for retain/reflect extraction:
+      - HINDSIGHT_API_LLM_PROVIDER=groq
+      - HINDSIGHT_API_LLM_MODEL=${HINDSIGHT_LLM_MODEL:-openai/gpt-oss-120b}
+      - HINDSIGHT_API_LLM_API_KEY=${GROQ_API_KEY}
+    volumes:
+      - hindsight-data:/home/hindsight/.pg0
+    restart: unless-stopped
+
+volumes:
+  hindsight-data:
